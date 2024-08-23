@@ -1,68 +1,110 @@
-const var_1 = document.querySelector(".var1");
-const var_2 = document.querySelector(".var2");
-const answer = document.querySelector(".answer");
+const add_ = document.querySelector(".add");
+const subtract_ = document.querySelector(".subtract");
+const multiply_ = document.querySelector(".multiply");
+const divide_ = document.querySelector(".divide");
+
+const topBlock=document.querySelector(".top");
+const middleBlock=document.querySelector(".middle");
+const bottomBlock=document.querySelector(".bottom");
+const Blocks =[topBlock,middleBlock,bottomBlock]
+
+const var1 = document.querySelector(".var1");
+const sign = document.querySelector(".operator");
+const var2 = document.querySelector(".var2");
 
 const message = document.querySelector(".message");
-const new_que = document.querySelector(".btn");
+const new_ques = document.querySelector(".btn")
 
-const add = document.querySelector(".add");
-const subtract = document.querySelector(".subtract");
-const multiply = document.querySelector(".multiply");
-const divide = document.querySelector(".divide");
-let operator = "+";
+const operators = ["+","-","*","/"]
 
-add.addEventListener("click",()=>{
-    operator = "+"
+
+var operator;
+var x; 
+var y;
+
+var m;
+var n;
+
+add_.addEventListener("click",()=>{
+  operator="+"
+
 });
-subtract.addEventListener("click",()=>{
-    operator = "-"
+subtract_.addEventListener("click",()=>{
+  operator="-"
+
 });
-multiply.addEventListener("click",()=>{
-    operator = "*"
-})
-divide.addEventListener("click",()=>{
-    operator = "/"
+multiply_.addEventListener("click",()=>{
+  operator="*"
+
+});
+divide_.addEventListener("click",()=>{
+  operator="/"
+
 });
 
+const eval = (a,operator,b)=>{
+  if(operator==="+"){
+    return a+b;
+  }else if(operator==="-"){
+    return a-b;
+  }else if(operator==="*"){
+    return a*b;
+  }else if(operator==="/"){
+    return a/b;
+  }
+}
 
-const topElement = document.querySelector(".top");
-const middle = document.querySelector(".middle");
-const bottom = document.querySelector(".bottom");
-const selector_array = [topElement, middle, bottom];
-let x;
-let y;
-let z;
-
-const create_question = () => {
-    message.style.background="white";
-  x = Math.floor(Math.random() * 10) + 1;
-  var_1.innerHTML = x;
-
-  y = Math.floor(Math.random() * 10) + 1;
-  var_2.innerHTML = y;
-
-  z = Math.floor(Math.random() * 3);
-
-  selector_array[z].innerHTML = x + y;
-  
-};
-
-selector_array.forEach((selector) => {
-  selector.addEventListener("click", () => {
-    let a = selector.innerHTML;
-    console.log(a);
-    console.log(x + y);
-
-    if (a == x + y) {
-      message.innerHTML = "correct";
-      message.style.background="green"
-    } else {
-      message.innerHTML="incorrect";
-      message.style.background="red"
+const creating_options=(f)=>{
+  var m = Math.floor(Math.random()*10);
+  var n = Math.floor(Math.random()*10);
+  console.log(m,n);
+  options = [m,n,z];
+  var i = Math.floor(Math.random()*3);
+  Blocks[i].innerHTML=f;
+  Blocks.forEach((block)=>{
+    if (block!=Blocks[i]){
+      block.innerHTML=Math.floor(Math.random()*30);
     }
-  });
-});
+  })
 
-create_question()
+}
 
-new_que.addEventListener("click",create_question)
+
+
+
+
+const new_question=()=>{
+  message.style.background="white";
+  x=Math.floor(Math.random()*10);
+  y=Math.floor(Math.random()*10);
+  operator = operators[Math.floor(Math.random()*4)];
+  z=eval(x,operator,y);
+  creating_options(z);
+  var1.innerHTML=x;
+  var2.innerHTML=y;
+  sign.innerHTML=operator;
+
+
+  
+}
+
+new_question();
+
+Blocks.forEach((block)=>{
+  block.addEventListener("click",()=>{
+    if(block.innerHTML==z){
+      message.innerHTML="correct";
+      message.style.background="green"
+
+    }else{
+      message.innerHTML="incorrect";
+      message.style.background="red";
+    }
+  })
+})
+new_ques.addEventListener("click",new_question)
+
+new_question();
+
+
+
